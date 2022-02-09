@@ -20,6 +20,7 @@ class Bediende(Werknemer):
 
     def toon_info_bediende(self):
         return super().toon_info_werknemer()+" basisloon is € "+str(self.basis_loon)
+
     def bereken_loon(self):
         aantal_dienstjaar = 2022-self.startjaar
         procent = self.basis_loon*(aantal_dienstjaar*2)/100
@@ -100,7 +101,7 @@ def sorteer_bediende_loon(lijst):
     for x in lijst:
         if isinstance(x,Bediende):
             lijst_bed.append(x)
-    lijst_bed.sort(key=lambda x:x.basis_loon)
+    lijst_bed.sort(key=lambda x:x.startjaar)
     for y in lijst_bed:
         print(y.toon_info_bediende())
 
@@ -130,6 +131,7 @@ a2 = Arbeider("w6","Frank","Mertens",2008,13.5)
 a3 = Arbeider("w7","Mario","Verjans",2010,12)
 a4 = Arbeider("w8","Karel","Jansen",2014,12)
 a5 = Arbeider("w9","Jannick","Peters",2018,11)
+
 
 print(b1.toon_info_werknemer())
 
