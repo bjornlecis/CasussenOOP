@@ -1,202 +1,153 @@
-class Activiteit:
-    def __init__(self,id,naam,kostprijs):
+class Boek:
+    def __init__(self,id,naam,auteur):
         self.id = id
         self.naam = naam
-        self.kostprijs = kostprijs
-        self.begeleider = "geen begeleider"
-    def toon_info(self):
-        return "ID:{} {} en kostprijs is € {}".format(self.id,self.naam,self.kostprijs)
-    def toon_naam(self):
-        return self.naam
-    def toon_kostprijs(self):
-        return self.kostprijs
-
+        self.auteur = auteur
+    def __str__(self):
+        return "ID: {} titel: {} van {} ".format(self.id,self.naam,self.auteur)
+    def toon_boek_auteur(self):
+        return "Titel: {} en Schrijver: {}".format(self.naam,self.auteur)
 
 class Persoon:
-    def __init__(self,id,naam,leeftijd):
+    def __init__(self,id,naam,geslacht):
         self.id = id
         self.naam = naam
-        self.leeftijd = leeftijd
+        self.geslacht = geslacht
 
-    def toon_info(self):
-        return "ID {}: {} is {} jaar ".format(self.id,self.naam,self.leeftijd)
-    def toon_leeftijd(self):
-        return self.leeftijd
-    def toon_id(self):
-        return self.id
-    def toon_naam(self):
-        return self.naam
+    def __str__(self):
+        return "ID: {} naam: {} geslacht {} ".format(self.id,self.naam,self.geslacht)
 
-class Begeleider(Persoon):
-    def __init__(self,id,naam,leeftijd,kostprijs):
-        super().__init__(id,naam,leeftijd)
-        self.kostprijs = kostprijs
-
-    def toon_info(self):
-        return super().toon_info()+" dagprijs "+str(self.kostprijs)
-
-class Deelnemer(Persoon):
-     def __init__(self,id,naam,leeftijd,organisatie):
-        super().__init__(id,naam,leeftijd)
-        self.organisatie = organisatie
-        self.aantalinschrijving = 0
-
-     def toon_info(self):
-        return super().toon_info()+" organisatie "+self.organisatie
-     def toon_id(self):
-         return self.id
-     def toon_organisatie(self):
-         return self.organisatie
-
-
-
-class Inschrijving:
-    def __init__(self,id,deelnemer,activiteit):
+class Uitlening:
+    def __init__(self,id,boek,persoon):
         self.id = id
-        self.deelnemer = deelnemer
-        self.activiteit = activiteit
-        self.deelnemer.aantalinschrijving += 1
+        self.boek = boek
+        self.persoon = persoon
 
-    def toon_info(self):
-        return "ID {} : {} ingeschreven voor {}"\
-            .format(self.id,self.deelnemer.naam,self.activiteit.naam)
-    def toon_naam_deelnemer(self):
-        return self.deelnemer.naam
-    def toon_activiteit_naam(self):
-        return self.activiteit.naam
+    def __str__(self):
+        return "ID {} Boek: {} Persoon: {}".format(self.id,self.boek.naam,self.persoon.naam)
+
+p = Persoon("P1","Jan","Man")
+p2 = Persoon("P2","Bart","Man")
+p3 = Persoon("P3","An","Vrouw")
+
+b = Boek("B1","Boek 1"," a1")
+b2 = Boek("B2","Boek 2","a2")
+b3 = Boek("B3","Boek 3","a3")
+
+u = Uitlening("U1",b,p)
+u1 = Uitlening("U2",b2,p)
+u2 = Uitlening("U3",b3,p2)
+u3 = Uitlening("U4",b,p3)
+
+personen = [p,p2,p3]
+boeken = [b,b2,b3]
+uitleningen = [u,u1,u2,u3]
 
 def toon_menu():
-    print("1: Toon inschrijvingen")
-    print("2: Toon persoons Info")
-    print("3: Toon begeleiders")
-    print("4: voeg persoon toe")
-    print("5: verwijder inschrijving")
-    print("6: print activiteit van deelnemer")
-    print("7: Sorteer deelnemers op leeftijd")
-    print("8: Sorteer op activiteit")
-    print("9: nieuwe inschrijving")
+    print("1 toon alle boeken")
+    print("2 toon alle personen")
+    print("3 toon alle uitleningen")
+    print("4 voeg boek toe")
+    print("5 voeg persoon toe")
+    print("6 voeg uitlening toe")
+    print("7 toon uitlening per boek")
+    print("8 toon boek geslacht")
+    print("9 sorteer boeken op titel")
+    print("10 verwijder uitlening")
 
-def toon_alle_inschrijvingen(lijst):
-    for x in lijst:
-        print(x.toon_info())
-def toon_alle_personen(lijst):
-    for x in lijst:
-        print(x.toon_info())
-def toon_alle_begeleiders(lijst):
-    for x in lijst:
-        if isinstance(x,Begeleider):
-            print(x.toon_info())
-def persoon_toevoegen(lijst):
-    id = input("geef het id in")
-    naam = input("geef de naam in")
-    leeftijd = input("geef de leeftijd in")
-    type = input("begeleider of deelnemer b/d")
-    if type == "b":
-        vergoeding = int(input("geef de vergoeding in"))
-        b = Begeleider(id,naam,leeftijd,vergoeding)
-        lijst.append(b)
+def toon_boeken():
+    for x in boeken:
+        print(x)
+
+def toon_personen():
+    for x in personen:
+        print(x)
+def toon_uitleningen():
+    for x in uitleningen:
+        print(x)
+
+def voeg_boek_toe():
+    id = input("Geef het ID")
+    naam = input("Geef de naam")
+    auteur = input("Geef de auteur")
+    b = Boek(id,naam,auteur)
+    boeken.append(b)
+
+def voeg_persoon_toe():
+
+    id = input("Geef het ID")
+    naam = input("Geef de naam")
+    geslacht = input("Geef het geslacht man/vrouw/x")
+    p = Persoon(id,naam,geslacht)
+    personen.append(p)
+
+def voeg_uitlening_toe():
+    id = input("geef het ID")
+    id_boek = input("geef het id van het boek")
+    #bestaat het boek
+    for x in boeken:
+        if id_boek == x.id:
+            b = Boek(id_boek,x.naam,x.auteur)
+
+    id_persoon = input("geef het id van de persoon")
+    for y in personen:
+        if id_persoon == y.id:
+            p = Persoon(id_persoon,y.naam,y.geslacht)
+
+    if isinstance(b,Boek) and isinstance(p,Persoon):
+        u = Uitlening(id,b,p)
+        uitleningen.append(u)
     else:
-        org = input("geef de organisatie in")
-        d = Deelnemer(id,naam,leeftijd,org)
-        lijst.append(d)
-def verwijder_inschrijving(lijst):
-    id = input("geef het id van de inschrijving")
-    for x,o in enumerate(lijst):
+        print("Uitlening kan niet worden toegevoegd")
+
+def toon_uitleningen_boek():
+    id_boek = input("Geef het id van het boek")
+    for x in uitleningen:
+        if id_boek == x.boek.id:
+            print(x.persoon)
+        else:
+            print("Boek bestaat niet of nog niet uitgeleend")
+
+def toon_boek_geslacht():
+    geslacht = input("geef het gelacht")
+    for x in uitleningen:
+        if geslacht == x.persoon.geslacht:
+            print(x.boek)
+
+def sorteer_boek_AZ():
+    boeken.sort(key= lambda x:x.naam)
+    for x in boeken:
+        print(x)
+
+def verwijder_uitlening():
+    id = input("geef het id van de uitlening")
+    for x,o in enumerate(uitleningen):
         if o.id == id:
-            lijst.pop(x)
-def toon_inschrijven_deelnemer(lijst):
-    naam = input("geef de naam van de deelnemer")
-    for x in lijst:
-        if naam == x.toon_naam_deelnemer():
-            print(x.toon_activiteit_naam())
-def sorteer_deelnemer_leeftijd(lijst):
-    deelnemer = []
-    for x in lijst:
-        if isinstance(x,Deelnemer):
-            deelnemer.append(x)
-    deelnemer.sort(key = lambda x:x.toon_leeftijd())
-    for y in deelnemer:
-        print(y.toon_info())
-def sorteer_activiteit_kostprijs(lijst):
-    lijst.sort(key= lambda x:x.kostprijs)
-    for x in lijst:
-        print( x.toon_info())
-
-def nieuwe_inschrijving(lijstI,lijstP,lijstA):
-    id = input("Geef het ID van de inschrijving")
-    id_d = input("Geef het ID van de deelnemer")
-    for x in lijstP:
-        if id_d == x.toon_id():
-            deelnemer_naam = x.toon_naam()
-            deelnemer_leeftijd = x.toon_leeftijd()
-            deelnemer_org = x.toon_organisatie()
-            d = Deelnemer(id_d,deelnemer_naam,deelnemer_leeftijd,deelnemer_org)
-    id_a = input("Geef het ID van de activiteit")
-    for y in lijstA:
-        if id_a == y.id:
-            activiteit_naam = y.toon_naam()
-            activiteit_prijs = y.toon_kostprijs()
-            a = Activiteit(id_a,activiteit_naam,activiteit_prijs)
-    a = Activiteit(id,d,a)
-    lijstI.append(a)
-
-
-a1 = Activiteit("a1","Bowlen",10)
-a2 = Activiteit("a2","Paintballen",25)
-a3 = Activiteit("a3","Karten",22)
-a4 = Activiteit("a4","Snowboarden",32)
-a5 = Activiteit("a5","Gin tasting",28)
-
-activiteiten = [a1,a2,a3,a4,a5]
-
-b1 = Begeleider("B1","Bart", 32, 85)
-b2 = Begeleider("B2","Jan", 36, 87)
-b3 = Begeleider("B1","Linda", 29, 78)
-
-
-d1 = Deelnemer("D1","Kurt",40,"Syntra")
-d2 = Deelnemer("D2","Mark",34,"Syntra")
-d3 = Deelnemer("D3","Petra",35,"VDAB")
-d4 = Deelnemer("D4","Nina",36,"VDAB")
-d5 = Deelnemer("D5","Nancy",33,"Thor park")
-
-personen = [b1,b2,b3,d1,d2,d3,d4,d5]
-
-i1 = Inschrijving("I1",d1,a5)
-i2 = Inschrijving("I2",d1,a2)
-i3 = Inschrijving("I3",d2,a1)
-i4 = Inschrijving("I4",d3,a5)
-i5 = Inschrijving("I5",d5,a2)
-i6 = Inschrijving("I6",d2,a3)
-i7 = Inschrijving("I7",d4,a5)
-i8 = Inschrijving("I8",d5,a4)
-i9 = Inschrijving("I9",d1,a1)
-
-inschrijving = [i1,i2,i3,i4,i5,i6,i7,i8,i9]
-
+            uitleningen.pop(x)
 
 #hoofdprogramma
 toon_menu()
-keuze = input("geef je keuze in")
+keuze = input("geef een keuze")
 while(not keuze == "stop"):
     if keuze == "1":
-        toon_alle_inschrijvingen(inschrijving)
+        toon_boeken()
     elif keuze == "2":
-        toon_alle_personen(personen)
+        toon_personen()
     elif keuze == "3":
-        toon_alle_begeleiders(personen)
+        toon_uitleningen()
     elif keuze == "4":
-        persoon_toevoegen(personen)
+        voeg_boek_toe()
     elif keuze == "5":
-        verwijder_inschrijving(inschrijving)
+        voeg_persoon_toe()
     elif keuze == "6":
-        toon_inschrijven_deelnemer(inschrijving)
+        voeg_uitlening_toe()
     elif keuze == "7":
-        sorteer_deelnemer_leeftijd(personen)
+        toon_uitleningen_boek()
     elif keuze == "8":
-        sorteer_activiteit_kostprijs(activiteiten)
+        toon_boek_geslacht()
     elif keuze == "9":
-        nieuwe_inschrijving(inschrijving,personen,activiteiten)
+        sorteer_boek_AZ()
+    elif keuze == "10":
+        verwijder_uitlening()
 
-    toon_menu()
-    keuze = input("geef je keuze in")
+    keuze = input("geef een keuze")
